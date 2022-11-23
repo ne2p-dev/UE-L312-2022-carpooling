@@ -46,8 +46,11 @@ class DataBaseService
         $sql = 'INSERT INTO users (firstname, lastname, email, birthday) VALUES (:firstname, :lastname, :email, :birthday)';
         $query = $this->connection->prepare($sql);
         $isOk = $query->execute($data);
+        if ($isOk) {
+            $userId = $this->connection->lastInsertId();
+        }
 
-        return $isOk;
+        return $userId;
     }
 
     /**
@@ -91,7 +94,7 @@ class DataBaseService
     /**
      * Delete an user.
      */
-    public function deleteUser(string $id): bool
+    public function deleteUser(int $id): bool
     {
         $isOk = false;
 
@@ -108,7 +111,7 @@ class DataBaseService
     /**
      * Create an ad.
      */
-    public function createAd(string $adTitle, string $idCar, DateTime $adDateTime, string $startPlace, string $endPlace): bool
+    public function createAd(string $adTitle, int $idCar, DateTime $adDateTime, string $startPlace, string $endPlace): bool
     {
         $isOk = false;
 
@@ -146,7 +149,7 @@ class DataBaseService
     /**
      * Update an ad.
      */
-    public function updateAd(string $idAd, string $adTitle, string $idCar, DateTime $adDateTime, string $startPlace, string $endPlace): bool
+    public function updateAd(int $idAd, string $adTitle, int $idCar, DateTime $adDateTime, string $startPlace, string $endPlace): bool
     {
         $isOk = false;
 
@@ -168,7 +171,7 @@ class DataBaseService
     /**
      * Delete an ad.
      */
-    public function deleteAd(string $idAd): bool
+    public function deleteAd(int $idAd): bool
     {
         $isOk = false;
 
@@ -185,7 +188,7 @@ class DataBaseService
     /**
      * Create a car.
      */
-    public function createCar(string $brand, string $model, string $color, string $seats, string $idOwner): bool
+    public function createCar(string $brand, string $model, string $color, string $seats): bool
     {
         $isOk = false;
 
@@ -194,9 +197,8 @@ class DataBaseService
             'model' => $model,
             'color' => $color,
             'seats' => $seats,
-            'idOwner' => $idOwner,
         ];
-        $sql = 'INSERT INTO cars (brand, model, color, seats, idOwner) VALUES (:brand, :model, :color, :seats, :idOwner)';
+        $sql = 'INSERT INTO cars (brand, model, color, seats) VALUES (:brand, :model, :color, :seats)';
         $query = $this->connection->prepare($sql);
         $isOk = $query->execute($data);
 
@@ -223,7 +225,7 @@ class DataBaseService
     /**
      * Update a car.
      */
-    public function updateCar(string $idCar, string $brand, string $model, string $color, string $seats, string $idOwner): bool
+    public function updateCar(int $idCar, string $brand, string $model, string $color, string $seats): bool
     {
         $isOk = false;
 
@@ -233,9 +235,8 @@ class DataBaseService
             'model' => $model,
             'color' => $color,
             'seats' => $seats,
-            'idOwner' => $idOwner,
         ];
-        $sql = 'UPDATE cars SET brand = :brand, model =:model, color = :color, seats = :seats, idOwner = :idOwner WHERE idCar = :idCar;';
+        $sql = 'UPDATE cars SET brand = :brand, model =:model, color = :color, seats = :seats WHERE idCar = :idCar;';
         $query = $this->connection->prepare($sql);
         $isOk = $query->execute($data);
 
@@ -245,7 +246,7 @@ class DataBaseService
     /**
      * Delete a car.
      */
-    public function deleteCar(string $idCar): bool
+    public function deleteCar(int $idCar): bool
     {
         $isOk = false;
 
@@ -257,6 +258,92 @@ class DataBaseService
         $isOk = $query->execute($data);
 
         return $isOk;
+    }
+
+    /**
+     * Relation bewteen an user and car.
+     */
+    public function setUserCars(int $idUser, int $idCar): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'idUser' => $idUser,
+            'idCar' => $idCar,
+        ];
+        $sql = 'INSERT INTO userCars (idUser, idCar) VALUES (:idUser, :idCar)';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+
+        return $isOk;
+    }
+
+    /**
+     * Get cars of given user id.
+     */
+    public function getUserCars(string $idUser): array
+    {
+        $userCars = [];
+
+        $data = [
+            'idUser' => $idUser,
+        ];
+        $sql = '
+            SELECT c.*
+            FROM cars as c
+            LEFT JOIN userCars as uc ON uc.idCar = c.id
+            WHERE uc.idUser = :idUser';
+        $query = $this->connection->prepare($sql);
+        $query->execute($data);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $userCars = $results;
+        }
+
+        return $userCars;
+    }
+
+    /**
+     * Relation bewteen an user and an ad.
+     */
+    public function setUserAds(int $idUser, int $idAd): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'idUser' => $idUser,
+            'idAd' => $idAd,
+        ];
+        $sql = 'INSERT INTO userAds (idUser, idAd) VALUES (:idUser, :idAd)';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+
+        return $isOk;
+    }
+
+    /**
+     * Get ads of given user id.
+     */
+    public function getUserAds(int $idUser): array
+    {
+        $userAds = [];
+
+        $data = [
+            'idUser' => $idUser,
+        ];
+        $sql = '
+            SELECT c.*
+            FROM ads as c
+            LEFT JOIN userAds as uc ON uc.idAd = c.id
+            WHERE uc.idUser = :idUser';
+        $query = $this->connection->prepare($sql);
+        $query->execute($data);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $userAds = $results;
+        }
+
+        return $userAds;
     }
 }
 

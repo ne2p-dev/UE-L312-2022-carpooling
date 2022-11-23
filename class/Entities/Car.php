@@ -13,12 +13,12 @@ class Car
     private $idOwner;
 
     // getter Id Car
-    public function getIdCar(): string
+    public function getIdCar(): int
     {
         return $this->idCar;
     }
     // setter Id Car
-    public function setIdCar(string $idCar): void
+    public function setIdCar(int $idCar): void
     {
         $this->idCar = $idCar;
     }
@@ -68,12 +68,12 @@ class Car
     }
 
     // getter id owner
-    public function getIdOwner(): string
+    public function getIdOwner(): int
     {
         return $this->idOwner;
     }
     // setter id owner
-    public function setIdOwner(string $idOwner): void
+    public function setIdOwner(int $idOwner): void
     {
         $this->idOwner = $idOwner;
     }

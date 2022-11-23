@@ -14,14 +14,15 @@ class Ad
     private $dateTime; // date and time of the travel
     private $startPlace; // place of the travel begin
     private $endPlace; // place of the travel end
+    private $idAdvertiser; // id of the advertiser
 
     // getter Id Ad
-    public function getId(): string
+    public function getId(): int
     {
         return $this->idAd;
     }
     // setter Id Ad
-    public function setId(string $idAd): void
+    public function setId(int $idAd): void
     {
         $this->id = $idAd;
     }
@@ -38,12 +39,12 @@ class Ad
     }
 
     // getter id car
-    public function getIdCar(): string
+    public function getIdCar(): int
     {
         return $this->idCar;
     }
     // setter id car
-    public function setIdCar(string $idCar): void
+    public function setIdCar(int $idCar): void
     {
         $this->idCar = $idCar;
     }
@@ -79,6 +80,17 @@ class Ad
     public function setEndPlace(string $endPlace): void
     {
         $this->endPlace = $endPlace;
+    }
+
+    // getter id avertiser
+    public function getIdAdvertiser(): int
+    {
+        return $this->idAdvertiser;
+    }
+    // setter id avertiser
+    public function setIdAdvertiser(int $idAdvertiser): void
+    {
+        $this->idAdvertiser = $idAdvertiser;
     }
 
 }
