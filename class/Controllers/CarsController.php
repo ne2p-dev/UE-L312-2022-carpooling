@@ -46,7 +46,7 @@ class CarsController
     {
         $html = '';
 
-        // Get all users :
+        // Get all cars :
         $carsService = new CarsService();
         $cars = $carsService->getCars();
 
@@ -57,8 +57,7 @@ class CarsController
                 $car->getBrand() . ' ' .
                 $car->getModel() . ' ' .
                 $car->getColor() . ' ' .
-                $car->getSeats() . ' ' .
-                $car->getIdOwner() . '<br />';
+                $car->getSeats() . '<br />';
         }
 
         return $html;

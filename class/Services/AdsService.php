@@ -37,7 +37,7 @@ class AdsService
         if (!empty($adsDTO)) {
             foreach ($adsDTO as $adDTO) {
                 $ad = new Ad();
-                $ad->setId($adDTO['idAd']);
+                $ad->setIdAd($adDTO['idAd']);
                 $ad->setAdTitle($adDTO['adTitle']);
                 $ad->setIdCar($adDTO['idCar']);
                 $date = new DateTime($adDTO['adDateTime']);

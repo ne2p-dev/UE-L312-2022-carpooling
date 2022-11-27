@@ -25,5 +25,8 @@ echo $controller->createAd();
     <label for="endPlace">Ville d'arrivé</label>
     <input type="text" name="endPlace">
     <br />
+    <label for="owner">Proprio</label>
+    <input type="text" name="owner">
+    <br />
     <input type="submit" value="Créer une annonce">
 </form>

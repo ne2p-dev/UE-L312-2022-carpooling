@@ -22,8 +22,5 @@ echo $controller->createCar();
     <label for="seats">Nombre de place :</label>
     <input type="text" name="seats">
     <br />
-    <label for="idOwner">Propriétaire :</label>
-    <input type="text" name="idOwner">
-    <br />
     <input type="submit" value="Inscrire une voiture">
 </form>

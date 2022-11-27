@@ -10,7 +10,6 @@ class Car
     private $model;
     private $color;
     private $seats;
-    private $idOwner;
 
     // getter Id Car
     public function getIdCar(): int
@@ -66,16 +65,5 @@ class Car
     {
         $this->seats = $seats;
     }
-
-    // getter id owner
-    public function getIdOwner(): int
-    {
-        return $this->idOwner;
-    }
-    // setter id owner
-    public function setIdOwner(int $idOwner): void
-    {
-        $this->idOwner = $idOwner;
-    }
-
+    
 }

@@ -216,7 +216,7 @@ class DataBaseService
         $query = $this->connection->query($sql);
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         if (!empty($results)) {
-            $ads = $results;
+            $cars = $results;
         }
 
         return $cars;

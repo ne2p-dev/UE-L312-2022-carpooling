@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\AdsService;
+use App\Services\CarsService;
 
 class AdsController
 {
